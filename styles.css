@@ -1,6 +1,48 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  height: 70px;
+  background-color: #1F1F3D;
+}
+
+h1 {
+  color: #FFF;
+  font-weight: 800;
+  font-size: 2.5em;
+  margin: 11px;
+}
+
+.header__span--color {
+  color: #FFC30C;
+}
+
+.header__form {
+  display: flex;
+  margin-top: 7px;
+}
+
 .header__img--search {
-  height: 30px;
-  width: 30px;
+  height: 50px;
+  width: 50px;
+  background-color: #C8D3D9;
+  padding: 10px;
+  border-radius: 2px 0 0 2px
+}
+
+.header__input--search {
+  height: 50px;
+  border: none;
+  border-radius: 0 2px 2px 0;
+  margin-right: 10px;
+  width: 300px;
 }
 
 .form__img--plus {
