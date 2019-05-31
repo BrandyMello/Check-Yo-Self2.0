@@ -1,0 +1,20 @@
+.header__img--search {
+  height: 30px;
+  width: 30px;
+}
+
+.form__img--plus {
+  height: 30px;
+  width: 30px;
+  background-color: #1F1F3D;
+}
+
+.rt__img--urgent {
+  height: 30px;
+  width: 30px;
+}
+
+.rt__img--delete {
+  height: 30px;
+  width: 30px;
+}
