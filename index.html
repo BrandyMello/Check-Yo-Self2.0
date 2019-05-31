@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Check Yo Self, a task list application</title>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>CHECK <span class="header__span--color">YO' </span>SELF</h1>
+      <form>
+        <img src="graphics/search.svg" class="header__img--search" alt="Type search in input to right and click here to search.">
+        <input type="text" placeholder="Search" class="header__input--search">
+      </form>
+    </header>
+    <main>
+      <section class="lft__section">
+        <form>
+          <label for="form--title">Task Title</label>
+          <input type="text" id="form--title">
+          <ul class="lft__ul--list">
+          </ul>
+          <label for="form--task">Task Item</label>
+          <input type="text" id="form--task">
+          <img src="graphics/plus.svg" alt="To add the task item written in the textbox to the right to a temporary list above, click here.">
+          <button class="form__btn--make-list" alt="To make a todo card from your list above, click this button.">Make Task List</button>
+          <button class="form__btn--clear-list" alt="To clear your temporary list and start again, click this button">Clear All</button>
+        </form>  
+        <button>Filter by Urgency</button>
+      </section>
+      <section class="rt__section--display">
+        <article class="rt__aricle--card">
+          <title>Task Title</title>
+          <output class="rt__output--list">
+            <ul class="rt__ul--list"> 
+            </ul>
+          </output>
+          <footer>
+            <img src="graphics/urgent.svg" class="rt__img--urgent">
+            <img src="graphics/delete.svg" class="rt__img--delete">
+          </footer>       
+        </article> 
+      </section>
+    </main>
+  </body>
+  <script type="text/javascript" src='todo-list.js'></script>
+  <script type="text/javascript" src='main.js'></script>
+</html>
