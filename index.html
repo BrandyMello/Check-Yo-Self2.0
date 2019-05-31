@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Check Yo Self, a task list application</title>
+    <link rel="stylesheet" type="text/css" href="reset.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+  </head>
+  <body>
+    <header>
+      <h1>CHECK <span class="header__span--color">YO' </span>SELF</h1>
+      <form>
+        <img src="search.svg" class="header__img--search" alt="Type search in input to right and click here to search.">
+        <input type="text" placeholder="Search" class="header__input--search">
+      </form>
+    </header>
+    <main>
+      <section class="left__section">
+        <form>
+          <label for="form--title">Task Title</label>
+          <input type="text" id="form--title">
+          <label for="form--task">Task Item</label>
+          <input type="text" id="form--task">
+          <img src="plus.svg" alt="To add the task item written in the textbox to the right to a temporary list above, click here.">
+          <button class="form__btn--make-list" alt="To make a todo card from your list above, click this button.">Make Task List</button>
+          <button class="form__btn--clear-list" alt="To clear your temporary list and start again, click this button">Clear All</button>
+        </form>  
+        <button>Filter by Urgency</button>
+      </section>
+    </main>
+
+  </body>
+  <script type="text/javascript" src='todo-list.js'></script>
+  <script type="text/javascript" src='main.js'></script>
+</html>
