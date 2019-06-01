@@ -58,7 +58,7 @@ main {
 
 .form {
   padding: 35px 10px 20px;
-  border-bottom: 1px solid #41687A;
+  border-bottom: 2px solid #41687A;
 }
 
 ul {
@@ -106,7 +106,7 @@ ul {
   background-color: #1F1F3D;
   height: 40px;
   width: 100%;
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 .lft__btn--filter {
@@ -114,16 +114,57 @@ ul {
   width: 93%;
 }
 
-.rt__section {
+.rt__section--display {
   background-color: #F3F6F7;
+  columns: 2 250px;
 }
 
+.rt__aricle--card {
+  border: 2px solid #C8D3D6;
+  display: inline-block;
+  margin:  1em;
+  break-inside: avoid;
+  width: 90%;
+}
+
+h2 {
+  border-bottom: 2px solid #C8D3D6;
+  color: #1F1F3D;
+  font-size: 1.3em;
+  font-weight: 800;
+  padding: 10px;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  /*justify-content: space-between;*/
+  flex-wrap: wrap;
+  border-top: 2px solid #C8D3D6;
+  height: 70px;
+}
+
+.rt__img--delete,
 .rt__img--urgent {
   height: 30px;
   width: 30px;
+  text-align: center;
 }
 
 .rt__img--delete {
-  height: 30px;
-  width: 30px;
+  
+}
+
+.rt__div--delete,
+.rt__div--urgent {
+  margin: 2.5%;
+  text-align: center;
+}
+
+.rt__div--urgent {
+  margin-left: 5px;
+}
+
+.rt__div--delete {
+  margin-left: 43%;
 }
