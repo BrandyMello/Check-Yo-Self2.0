@@ -1,22 +1,52 @@
 var addItem = document.querySelector('.form__input--plus');
 var tempList =document.querySelector('.lft__ul--list');
 var task = document.querySelector('#form--task');
+var title = document.querySelector('#form--title');
+
+// var formInputs = document.querySelectorAll('.form__input');
+var makeListBtn = document.querySelector('.form__btn--make-list');
+var clearListBtn = document.querySelector('.form__btn--clear-list');
+
 var tempTaskList = [];
 
 addItem.addEventListener('click', addTaskItem);
 tempList.addEventListener('click', deleteTempItem);
-task.addEventListener('keyup', enablePlus);
+task.addEventListener('keyup', enableBtns);
+title.addEventListener('keyup', enableBtns);
 
 addItem.disabled = true;
+makeListBtn.disabled = true;
+clearListBtn.disabled = true;
 
-// function enableAddTaskBtn() {
-//   var task = document.querySelector('#form--task');
-//   if (task.value === "") {
-//     addItem.setAttribute('disabled', 'disabled');
-//   } else {
-//     addItem.removeAttribute('disabled');
-//   }
-// }
+function enableBtns() {
+  enablePlus();
+  enableMakeListBtn();
+  enableClearBtn();
+}
+
+function enablePlus() {
+  if (task.value !== '' ) {
+    addItem.disabled = false;
+  } else {
+    addItem.disabled = true;
+  }
+}
+
+function enableMakeListBtn() {
+  if (task.value !== '' || title.value !== '') {
+    makeListBtn.disabled = false;
+  } else {
+    makeListBtn.disabled = true;
+  }
+}
+
+function enableClearBtn() {
+  if (task.value !== '' && title.value !== '') {
+    clearListBtn.disabled = false;
+  } else {
+    clearListBtn.disabled = true;
+  }
+}
 
 function addTaskItem(e) {
   e.preventDefault();
@@ -38,9 +68,5 @@ function removeTempItem(item) {
   tempTaskList.splice(item, 1);
 }
 
-function enablePlus() {
-  if(task.value !== "" ) {
-    addItem.disabled = false;
-  }
-}
+
 

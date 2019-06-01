@@ -117,6 +117,8 @@ li {
   width: 14%;
 }
 
+.form__btn--clear-list:disabled,
+.form__btn--make-list:disabled,
 .form__input--plus:disabled {
   background-color: #545472;
 }
