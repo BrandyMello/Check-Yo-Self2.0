@@ -10,14 +10,14 @@ body {
 header {
   display: flex;
   justify-content: space-between;
-  height: 68px;
+  height: 88px;
   background-color: #1F1F3D;
 }
 
 h1 {
   color: #FFF;
   font-weight: 800;
-  font-size: 2em;
+  font-size: 3em;
   margin: 16px;
 }
 
@@ -27,23 +27,23 @@ h1 {
 
 .header__form {
   display: flex;
-  margin-top: 9px;
+  margin-top: 12px;
 }
 
 .header__img--search {
-  height: 48px;
-  width: 50px;
+  height: 63px;
+  width: 63px;
   background-color: #C8D3D9;
-  padding: 10px;
-  border-radius: 2px 0 0 2px
+  padding: 14px;
+  border-radius: 3px 0 0 3px
 }
 
 .header__input--search {
-  height: 48px;
+  height: 63px;
   border: none;
-  border-radius: 0 2px 2px 0;
-  margin-right: 10px;
-  width: 300px;
+  border-radius: 0 3px 3px 0;
+  margin-right: 15px;
+  width: 375px;
 }
 
 main {
@@ -57,27 +57,39 @@ main {
 }
 
 .form {
-  padding: 35px 10px 20px;
+  padding: 45px 10px 20px;
   border-bottom: 2px solid #41687A;
 }
 
 ul {
-  margin: 35px;
+  display: flex;
+  margin: 20px;
+}
+
+li {
+  color: #F3F6F7;
+  margin-left: 8px;
+}
+
+.form__li--checkbox {
+  height: 20px;
+  width: 20px;
 }
 
 .form__label {
   color: #F3F6F7;
+  font-size: 1.3em;
 }
 
 .form__input {
-  border: 1px solid #1F1F3D;
-  height: 47px;
-  margin-top: 5px;
+  border: 2px solid #1F1F3D;
+  height: 60px;
+  margin: 10px 0;
   width: 100%;
 }
 
 .form__input--title {
- border-radius: 2px; 
+ border-radius: 3px; 
 }
 
 .lft__div--input-task {
@@ -91,8 +103,8 @@ ul {
 }
 
 .form__img--plus {
-  height: 47px;
-  margin-top: 5px;
+  height: 60px;
+  margin-top: 10px;
   background-color: #1F1F3D;
   border-radius: 0 2px 2px 0;
   padding: 7px;
@@ -104,14 +116,14 @@ ul {
   border: none;
   color: #FFF;
   background-color: #1F1F3D;
-  height: 47px;
+  height: 60px;
   width: 100%;
-  margin: 10px 0;
+  margin: 15px 0;
   font-size: 1.4em;
 }
 
 .lft__btn--filter {
-  margin: 32px 10px;
+  margin: 44px 10px;
   width: 93%;
 }
 
@@ -125,7 +137,7 @@ ul {
   display: inline-block;
   margin:  2em;
   break-inside: avoid;
-  width: 90%;
+  width: 92%;
   padding: 2px;
 }
 
