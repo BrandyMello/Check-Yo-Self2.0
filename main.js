@@ -69,39 +69,54 @@ function removeTempItem(item) {
 
 function handleMakeListBtn(e) {
   e.preventDefault();
-  instantiateCardList();
+  instantiateList();
   // populateCard(); 
 }
 
-function instantiateCardList() {
+function instantiateList() {
   var taskObjects = []; 
   for (var i =0; i < tempTaskList.length; i++) {
     var taskItem = new TaskItem(tempTaskList[i]);
     taskObjects.push(taskItem);
   }
-
+  instantiateCard(taskObjects);
   // populateCard(taskObjects);
   return taskObjects;
 }
 
-// function populateCard() {
-//   var taskCard = `<article class="rt__aricle--card" data-id=>
-//           <h2>${title.value}</h2>
-//           <output class="rt__output--list">
-//             <ul class="rt__ul--list"> 
-//             </ul>
-//           </output>
-//           <footer>
-//             <div class="rt__div--urgent">
-//               <img src="graphics/urgent.svg" class="rt__img--urgent">
-//               <p>URGENT</p>
-//             </div>
-//             <div class="rt__div--delete">
-//               <img src="graphics/delete.svg" class="rt__img--delete">
-//             <p>DELETE</p>  
-//             </div> 
-//           </footer>       
-//         </article>`;
-//   display.insertAdjacentHTML('afterbegin', taskCard);
-// }
+function instantiateCard(objectsArray) {
+  var newToDo = new ToDoList({id:Date.now(), title: title.value, urgent: false, tasks: objectsArray});
+  populateCard(newToDo);
+}
+
+function populateCard(cardObj) {
+  var taskCard = `<article class="rt__aricle--card" data-id=>
+          <h2>${cardObj.title}</h2>
+          <output class="rt__output--list">
+            <ul class="rt__ul--list">
+            ${generateList(cardObj)}
+            </ul>
+          </output>
+          <footer>
+            <div class="rt__div--urgent">
+              <img src="graphics/urgent.svg" class="rt__img--urgent">
+              <p>URGENT</p>
+            </div>
+            <div class="rt__div--delete">
+              <img src="graphics/delete.svg" class="rt__img--delete">
+            <p>DELETE</p>  
+            </div> 
+          </footer>       
+        </article>`;
+  display.insertAdjacentHTML('afterbegin', taskCard);
+}
+
+function generateList(card) {
+  
+  var cardList = '';
+  for (var i = 0; i < card.tasks.length; i++) {
+    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked"><span class="card__span">${card.tasks[i].taskList}</span></li>`;
+  }
+  return cardList;
+}
 

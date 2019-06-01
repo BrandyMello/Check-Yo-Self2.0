@@ -171,6 +171,16 @@ h2 {
   padding: 10px;
 }
 
+.card__li--unchecked {
+  width: 20px;
+  height: 20px;
+}
+
+.card__span {
+  padding-left: 5px;
+  color: #C8D3D6;
+}
+
 footer {
   display: flex;
   flex-direction: column;
