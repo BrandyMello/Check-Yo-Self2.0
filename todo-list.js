@@ -19,6 +19,21 @@ class ToDoList {
   }
 
   updateTask() {
-    
+
   }
+
+  // get id() {
+  //   return this.id;
+  // }
+}
+
+class TaskItem {
+  constructor(taskList) {
+    this.taskList = taskList;
+  }
+
+  // instatiateTasks(taskList) {
+
+
+  // }
 }
