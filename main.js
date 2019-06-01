@@ -6,6 +6,6 @@ function addTaskItem() {
   var task = document.querySelector('#form--task');
   var list = document.querySelector('.lft__ul--list');
   var taskList = `
-  <img src="graphics/checkbox.svg" class="form__li--checkbox"><li>${task.value}</li>`;
+  <li><img src="graphics/checkbox.svg" class="form__li--checkbox"><span class="li__span">${task.value}</span></li>`;
   list.insertAdjacentHTML('beforeend', taskList);
 }

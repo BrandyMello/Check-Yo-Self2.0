@@ -62,13 +62,19 @@ main {
 }
 
 ul {
-  display: flex;
+  
   margin: 20px;
 }
 
 li {
+  display: flex;
   color: #F3F6F7;
-  margin-left: 8px;
+  margin: 10px;
+}
+
+.li__span {
+  align-self: baseline;
+  margin-left: 10px;
 }
 
 .form__li--checkbox {
