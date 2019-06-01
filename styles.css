@@ -108,13 +108,17 @@ li {
   width: 86%;
 }
 
-.form__img--plus {
+.form__input--plus {
   height: 60px;
   margin-top: 10px;
   background-color: #1F1F3D;
   border-radius: 0 2px 2px 0;
   padding: 7px;
   width: 14%;
+}
+
+.form__input--plus:disabled {
+  background-color: #545472;
 }
 
 .lft__btn {
@@ -128,7 +132,17 @@ li {
   font-size: 1.4em;
 }
 
+.lft__btn: disabled {
+  background-color: #3C6577;
+}
+
 .lft__btn--filter {
+  border-radius: 2px;
+  border: none;
+  color: #FFF;
+  background-color: #1F1F3D;
+  height: 60px;
+  font-size: 1.4em;
   margin: 44px 10px;
   width: 95%;
 }
@@ -189,7 +203,7 @@ footer {
 .rt__div--urgent p,
 .rt__div--delete p {
   margin-top: 4px;
-  color: #41687A;
+  color: #3C6577;
 }
 
 .rt__div--delete {
