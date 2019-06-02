@@ -99,6 +99,7 @@ function handleMakeListBtn(e) {
 
 //Cannot get message to disappear.
 //two global arrays
+//do I need to return instantiateList?
 
 function clearForm() {
   var list = document.querySelector('.lft__ul--list');
@@ -115,6 +116,7 @@ function instantiateList() {
     taskObjects.push(taskItem);
   }
   instantiateCard(taskObjects);
+  // console.log(taskObjects[0].checked);
 }
 
 function instantiateCard(objectsArray) {
@@ -165,4 +167,15 @@ function generateList(card) {
 
 function checkOffItem(e) {
   e.target.src = `graphics/checkbox-active.svg`;
+  console.log(e.target.closest('.list-item').childElement);
 }
+
+// function instantiateList() {
+//   var taskObjects = []; 
+//   for (var i =0; i < taskList.length; i++) {
+//     var taskItem = new TaskItem(taskList[i]);
+//     taskObjects.push(taskItem);
+//   }
+//   instantiateCard(taskObjects);
+//   console.log(taskObjects[0].checked);
+// }

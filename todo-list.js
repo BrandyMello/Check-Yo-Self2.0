@@ -24,10 +24,6 @@ class ToDoList {
   updateTask() {
 
   }
-
-  // get id() {
-  //   return this.id;
-  // }
 }
 
 class TaskItem {
@@ -35,5 +31,9 @@ class TaskItem {
     this.items = items;
     this.checked = false;
 
+  }
+
+  updateCheck() {
+    
   }
 }
