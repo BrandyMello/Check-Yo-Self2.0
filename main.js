@@ -72,7 +72,7 @@ function addTaskItem(e) {
   e.preventDefault();
   var list = document.querySelector('.lft__ul--list');
   var taskListItem = `
-  <li class="list-item"><img src="graphics/delete.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
+  <li class="list-item"><img src="graphics/delete-list-item.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
     list.insertAdjacentHTML('beforeend', taskListItem);
     taskList.push(task.value);
     task.value = '';
