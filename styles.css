@@ -31,15 +31,15 @@ h1 {
 }
 
 .header__img--search {
-  height: 60px;
-  width: 60px;
+  height: 58px;
+  width: 58px;
   background-color: #C8D3D9;
   padding: 14px;
   border-radius: 3px 0 0 3px
 }
 
 .header__input--search {
-  height: 60px;
+  height: 58px;
   border: none;
   border-radius: 0 3px 3px 0;
   margin-right: 15px;
@@ -154,6 +154,18 @@ li {
   columns: 2 250px;
 }
 
+.rt__section--message {
+  height: 300px;
+  width: 92%;
+  margin: 30px;
+  border: 4px dotted #FFE69C;
+  color: #FFE69C;
+  padding: 30px;
+  font-size: x-large;
+  break-inside: avoid;
+  display: inline-block;
+}
+
 .rt__aricle--card {
   border: 2px solid #C8D3D6;
   display: inline-block;
@@ -174,11 +186,12 @@ h2 {
 .card__li--unchecked {
   width: 20px;
   height: 20px;
+  color: #1F1F3D;
 }
 
 .card__span {
   padding-left: 5px;
-  color: #C8D3D6;
+  color: #1F1F3D;
 }
 
 footer {

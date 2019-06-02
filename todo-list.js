@@ -28,7 +28,7 @@ class ToDoList {
 }
 
 class TaskItem {
-  constructor(taskList) {
-    this.taskList = taskList;
+  constructor(items) {
+    this.items = items;
   }
 }
