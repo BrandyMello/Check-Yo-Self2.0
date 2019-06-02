@@ -10,7 +10,7 @@ class ToDoList {
 
   // }
   saveToStorage(cardsArray) {
-    localStorage.setItem('ideas', JSON.stringify(cardsArray));
+    localStorage.setItem('todos', JSON.stringify(cardsArray));
   }
 
   deleteFormStorage() {

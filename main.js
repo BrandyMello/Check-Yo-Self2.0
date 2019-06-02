@@ -19,6 +19,25 @@ addItem.disabled = true;
 makeListBtn.disabled = true;
 clearListBtn.disabled = true;
 
+window.onload = function() {
+  reloadLists();
+}
+
+function reloadLists() {
+  var newLists = JSON.parse(localStorage.getItem('todos')) || [];
+  newLists.map(function(object) {
+   reInstantiateCard(object);
+ });
+  // hideMessage();
+}
+
+function reInstantiateCard(list) {
+  var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
+  populateCard(newToDo);
+  lists.push(newToDo);
+  newToDo.saveToStorage(lists);
+}
+
 function enableBtns() {
   enablePlus();
   enableMakeListBtn();
@@ -94,11 +113,14 @@ function instantiateList() {
   for (var i =0; i < taskList.length; i++) {
     var taskItem = new TaskItem(taskList[i]);
     taskObjects.push(taskItem);
+    console.log(taskItem);
+    console.log(taskObjects);
   }
   instantiateCard(taskObjects);
 }
 
 function instantiateCard(objectsArray) {
+  console.log(localStorage);
   var newToDo = new ToDoList({id:Date.now(), title: title.value, urgent: false, tasks: objectsArray});
   populateCard(newToDo);
   lists.push(newToDo);
