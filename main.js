@@ -5,7 +5,9 @@ var title = document.querySelector('#form--title');
 var makeListBtn = document.querySelector('.form__btn--make-list');
 var clearListBtn = document.querySelector('.form__btn--clear-list');
 var display = document.querySelector('.rt__section--display');
-var tempTaskList = [];
+var message = document.querySelector('.rt__section--message');
+var cards = [];
+var taskList = [];
 
 addItem.addEventListener('click', addTaskItem);
 tempList.addEventListener('click', deleteTempItem);
@@ -53,7 +55,7 @@ function addTaskItem(e) {
   var taskListItem = `
   <li class="list-item"><img src="graphics/delete.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
     list.insertAdjacentHTML('beforeend', taskListItem);
-    tempTaskList.push(task.value);
+    taskList.push(task.value);
     task.value = '';
 }
 
@@ -64,41 +66,45 @@ function deleteTempItem(e) {
 }
 
 function removeTempItem(item) {
-  var item = tempTaskList.indexOf(item.innerText);
-  tempTaskList.splice(item, 1);
+  var item = taskList.indexOf(item.innerText);
+  taskList.splice(item, 1);
 }
 
 function handleMakeListBtn(e) {
   e.preventDefault();
   instantiateList();
-  clearForm(); 
+  clearForm();
+   
 }
+
+//Do I need to carry the event of the click through to clearForm to preventDefault? Cards are clearing also.
 
 function clearForm() {
   var list = document.querySelector('.lft__ul--list');
   title.value = '';
   task.value = '';
   list.innerHTML = '';
-  tempTaskList = []; 
+  taskList = []; 
 }
 
 function instantiateList() {
   var taskObjects = []; 
-  for (var i =0; i < tempTaskList.length; i++) {
-    var taskItem = new TaskItem(tempTaskList[i]);
+  for (var i =0; i < taskList.length; i++) {
+    var taskItem = new TaskItem(taskList[i]);
     taskObjects.push(taskItem);
   }
   instantiateCard(taskObjects);
-  return taskObjects;
 }
 
 function instantiateCard(objectsArray) {
   var newToDo = new ToDoList({id:Date.now(), title: title.value, urgent: false, tasks: objectsArray});
   populateCard(newToDo);
+  cards.push(newToDo);
+  console.log(cards);
 }
 
 function populateCard(cardObj) {
-  var taskCard = `<article class="rt__aricle--card" data-id=>
+  var taskCard = `<article class="rt__aricle--card" data-id=${cardObj.id}>
           <h2>${cardObj.title}</h2>
           <output class="rt__output--list">
             <ul class="rt__ul--list">
@@ -119,11 +125,19 @@ function populateCard(cardObj) {
   display.insertAdjacentHTML('afterbegin', taskCard);
 }
 
+// function hideMessage(cardArr) {
+//   if (cardArr.length > 0) {
+//     message.classList.add('hidden');
+//     console.log(cardArr.length)
+//   } else {
+//     message.classList.remove('hidden');
+//   }
+// }
+
 function generateList(card) {
-  
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
-    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked"><span class="card__span">${card.tasks[i].taskList}</span></li>`;
+    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked"><span class="card__span">${card.tasks[i].items}</span></li>`;
   }
   return cardList;
 }

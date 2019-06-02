@@ -156,6 +156,7 @@ li {
 
 .rt__section--message {
   height: 300px;
+  width: 92%;
   margin: 30px;
   border: 4px dotted #FFE69C;
   color: #FFE69C;
