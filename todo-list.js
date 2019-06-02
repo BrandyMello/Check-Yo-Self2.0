@@ -33,5 +33,7 @@ class ToDoList {
 class TaskItem {
   constructor(items) {
     this.items = items;
+    this.checked = false;
+
   }
 }

@@ -6,6 +6,7 @@ var makeListBtn = document.querySelector('.form__btn--make-list');
 var clearListBtn = document.querySelector('.form__btn--clear-list');
 var display = document.querySelector('.rt__section--display');
 var message = document.querySelector('.rt__section--message');
+var taskBubble = document.querySelector('.card__li--unchecked');
 var lists = [];
 var taskList = [];
 
@@ -14,6 +15,7 @@ tempList.addEventListener('click', deleteTempItem);
 task.addEventListener('keyup', enableBtns);
 title.addEventListener('keyup', enableBtns);
 makeListBtn.addEventListener('click', handleMakeListBtn);
+display.addEventListener('click', checkOffItem);
 
 addItem.disabled = true;
 makeListBtn.disabled = true;
@@ -161,3 +163,6 @@ function generateList(card) {
   return cardList;
 }
 
+function checkOffItem(e) {
+  e.target.src = `graphics/checkbox-active.svg`;
+}
