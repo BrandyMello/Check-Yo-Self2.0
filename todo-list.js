@@ -6,8 +6,11 @@ class ToDoList {
     this.tasks = list.tasks; //array of objects
   }
 
-  saveToStorage() {
+  // saveToStorage() {
 
+  // }
+  saveToStorage(cardsArray) {
+    localStorage.setItem('ideas', JSON.stringify(cardsArray));
   }
 
   deleteFormStorage() {

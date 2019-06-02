@@ -6,7 +6,7 @@ var makeListBtn = document.querySelector('.form__btn--make-list');
 var clearListBtn = document.querySelector('.form__btn--clear-list');
 var display = document.querySelector('.rt__section--display');
 var message = document.querySelector('.rt__section--message');
-var cards = [];
+var lists = [];
 var taskList = [];
 
 addItem.addEventListener('click', addTaskItem);
@@ -77,7 +77,9 @@ function handleMakeListBtn(e) {
    
 }
 
-//Do I need to carry the event of the click through to clearForm to preventDefault? Cards are clearing also.
+//Do I need to carry the event of the click through to clearForm to preventDefault? 
+// Cards are clearing on clear all button.
+//two global arrays
 
 function clearForm() {
   var list = document.querySelector('.lft__ul--list');
@@ -99,8 +101,8 @@ function instantiateList() {
 function instantiateCard(objectsArray) {
   var newToDo = new ToDoList({id:Date.now(), title: title.value, urgent: false, tasks: objectsArray});
   populateCard(newToDo);
-  cards.push(newToDo);
-  console.log(cards);
+  lists.push(newToDo);
+  newToDo.saveToStorage(lists);
 }
 
 function populateCard(cardObj) {
