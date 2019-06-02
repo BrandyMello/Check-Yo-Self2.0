@@ -28,7 +28,7 @@ function reloadLists() {
   newLists.map(function(object) {
    reInstantiateCard(object);
  });
-  // hideMessage();
+  hideMessage();
 }
 
 function reInstantiateCard(list) {
@@ -92,12 +92,10 @@ function removeTempItem(item) {
 function handleMakeListBtn(e) {
   e.preventDefault();
   instantiateList();
-  clearForm();
-   
+  clearForm();  
 }
 
-//Do I need to carry the event of the click through to clearForm to preventDefault? 
-// Cards are clearing on clear all button.
+//Cannot get message to disappear.
 //two global arrays
 
 function clearForm() {
@@ -113,21 +111,19 @@ function instantiateList() {
   for (var i =0; i < taskList.length; i++) {
     var taskItem = new TaskItem(taskList[i]);
     taskObjects.push(taskItem);
-    console.log(taskItem);
-    console.log(taskObjects);
   }
   instantiateCard(taskObjects);
 }
 
 function instantiateCard(objectsArray) {
-  console.log(localStorage);
   var newToDo = new ToDoList({id:Date.now(), title: title.value, urgent: false, tasks: objectsArray});
-  populateCard(newToDo);
   lists.push(newToDo);
+  populateCard(newToDo);
   newToDo.saveToStorage(lists);
 }
 
 function populateCard(cardObj) {
+  hideMessage();
   var taskCard = `<article class="rt__aricle--card" data-id=${cardObj.id}>
           <h2>${cardObj.title}</h2>
           <output class="rt__output--list">
@@ -149,14 +145,13 @@ function populateCard(cardObj) {
   display.insertAdjacentHTML('afterbegin', taskCard);
 }
 
-// function hideMessage(cardArr) {
-//   if (cardArr.length > 0) {
-//     message.classList.add('hidden');
-//     console.log(cardArr.length)
-//   } else {
-//     message.classList.remove('hidden');
-//   }
-// }
+function hideMessage() {
+  if (lists.length > 0) {
+    message.classList.add('hidden');
+  } else {
+    message.classList.remove('hidden');
+  }
+}
 
 function generateList(card) {
   var cardList = '';

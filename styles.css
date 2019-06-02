@@ -166,6 +166,10 @@ li {
   display: inline-block;
 }
 
+.hidden {
+  display: none;
+}
+
 .rt__aricle--card {
   border: 2px solid #C8D3D6;
   display: inline-block;
