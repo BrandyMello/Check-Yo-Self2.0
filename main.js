@@ -54,6 +54,7 @@ function addTaskItem(e) {
   <li class="list-item"><img src="graphics/delete.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
     list.insertAdjacentHTML('beforeend', taskListItem);
     tempTaskList.push(task.value);
+    task.value = '';
 }
 
 function deleteTempItem(e) {
