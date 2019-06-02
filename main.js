@@ -70,7 +70,15 @@ function removeTempItem(item) {
 function handleMakeListBtn(e) {
   e.preventDefault();
   instantiateList();
-  // populateCard(); 
+  clearForm(); 
+}
+
+function clearForm() {
+  var list = document.querySelector('.lft__ul--list');
+  title.value = '';
+  task.value = '';
+  list.innerHTML = '';
+  tempTaskList = []; 
 }
 
 function instantiateList() {
@@ -80,7 +88,6 @@ function instantiateList() {
     taskObjects.push(taskItem);
   }
   instantiateCard(taskObjects);
-  // populateCard(taskObjects);
   return taskObjects;
 }
 
