@@ -6,9 +6,7 @@ class ToDoList {
     this.tasks = list.tasks; //array of objects
   }
 
-  // saveToStorage() {
-
-  // }
+ 
   saveToStorage(cardsArray) {
     localStorage.setItem('todos', JSON.stringify(cardsArray));
   }
@@ -30,10 +28,9 @@ class TaskItem {
   constructor(items) {
     this.items = items;
     this.checked = false;
-
   }
 
   updateCheck() {
-    
+
   }
 }

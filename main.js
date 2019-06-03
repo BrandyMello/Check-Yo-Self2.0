@@ -33,6 +33,8 @@ function reloadLists() {
   hideMessage();
 }
 
+//do I need to retrurn above and if so why?
+
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
   populateCard(newToDo);
@@ -40,13 +42,13 @@ function reInstantiateCard(list) {
   newToDo.saveToStorage(lists);
 }
 
-function enableBtns() {
-  enablePlus();
-  enableMakeListBtn();
-  enableClearBtn();
+function enableBtns(e) {
+  enablePlus(e);
+  enableMakeListBtn(e);
+  enableClearBtn(e);
 }
 
-function enablePlus() {
+function enablePlus(e) {
   if (task.value !== '' ) {
     addItem.disabled = false;
   } else {
@@ -54,15 +56,15 @@ function enablePlus() {
   }
 }
 
-function enableMakeListBtn() {
-  if (task.value !== '' || title.value !== '') {
-    makeListBtn.disabled = false;
-  } else {
+function enableMakeListBtn(e) {
+  if (task.value === '' || title.value === '') {
     makeListBtn.disabled = true;
+  } else {
+    makeListBtn.disabled = false;
   }
 }
 
-function enableClearBtn() {
+function enableClearBtn(e) {
   if (task.value !== '' && title.value !== '') {
     clearListBtn.disabled = false;
   } else {
@@ -93,6 +95,7 @@ function removeTempItem(item) {
 
 function handleMakeListBtn(e) {
   e.preventDefault();
+  enableBtns(e)
   instantiateList();
   clearForm();  
 }
