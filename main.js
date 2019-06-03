@@ -171,7 +171,7 @@ function generateList(card) {
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
     console.log(card.tasks[i]);
-    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked" data-id=${card.id}><span class="card__span">${card.tasks[i].item}</span></li>`;
+    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked" data-id=${card.tasks[i].id}><span class="card__span">${card.tasks[i].item}</span></li>`;
     // console.log(cardList)
 
   }
@@ -180,7 +180,7 @@ function generateList(card) {
 
 function checkOffItem(e) {
   e.target.src = `graphics/checkbox-active.svg`;
-  console.log(e.target);
+  e.target.nextSibling.classList.add('card__span--italic');
 }
 
 // var span = document.querySelector('.card__span');
