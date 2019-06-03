@@ -114,12 +114,17 @@ function clearForm() {
 
 function instantiateList() {
   var taskObjects = []; 
+  // console.log(taskList);
   for (var i =0; i < taskList.length; i++) {
-    var taskItem = new TaskItem(taskList[i]);
+    var taskItem = {
+      id: Date.now() + i,
+      item: taskList[i],
+      checked: false
+    };
     taskObjects.push(taskItem);
   }
   instantiateCard(taskObjects);
-  // console.log(taskObjects[0].checked);
+  // console.log(taskObjects);
 }
 
 function instantiateCard(objectsArray) {
@@ -131,6 +136,7 @@ function instantiateCard(objectsArray) {
 
 function populateCard(cardObj) {
   hideMessage();
+  // console.log(cardObj);
   var taskCard = `<article class="rt__aricle--card" data-id=${cardObj.id}>
           <h2>${cardObj.title}</h2>
           <output class="rt__output--list">
@@ -161,17 +167,24 @@ function hideMessage() {
 }
 
 function generateList(card) {
+  console.log(card);
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
-    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked"><span class="card__span">${card.tasks[i].items}</span></li>`;
+    console.log(card.tasks[i]);
+    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked" data-id=${card.id}><span class="card__span">${card.tasks[i].item}</span></li>`;
+    // console.log(cardList)
+
   }
   return cardList;
 }
 
 function checkOffItem(e) {
   e.target.src = `graphics/checkbox-active.svg`;
-  console.log(e.target.closest('.list-item').childElement);
+  console.log(e.target);
 }
+
+// var span = document.querySelector('.card__span');
+//     span.textContent.add('.card__span--italic');
 
 // function instantiateList() {
 //   var taskObjects = []; 

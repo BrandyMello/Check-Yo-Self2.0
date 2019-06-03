@@ -198,6 +198,10 @@ h2 {
   color: #1F1F3D;
 }
 
+.card__span--italic {
+  font-style: italic;
+}
+
 footer {
   display: flex;
   flex-direction: column;
