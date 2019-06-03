@@ -15,6 +15,8 @@ tempList.addEventListener('click', deleteTempItem);
 task.addEventListener('keyup', enableBtns);
 title.addEventListener('keyup', enableBtns);
 makeListBtn.addEventListener('click', handleMakeListBtn);
+display.addEventListener('click', findCardIndex);
+display.addEventListener('click', findTask);
 display.addEventListener('click', checkOffItem);
 
 addItem.disabled = true;
@@ -23,6 +25,7 @@ clearListBtn.disabled = true;
 
 window.onload = function() {
   reloadLists();
+  // console.log(lists);
 }
 
 function reloadLists() {
@@ -37,6 +40,7 @@ function reloadLists() {
 
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
+  console.log(newToDo.tasks);
   populateCard(newToDo);
   lists.push(newToDo);
   newToDo.saveToStorage(lists);
@@ -80,6 +84,7 @@ function addTaskItem(e) {
     list.insertAdjacentHTML('beforeend', taskListItem);
     taskList.push(task.value);
     task.value = '';
+    enablePlus(e);
 }
 
 function deleteTempItem(e) {
@@ -117,7 +122,7 @@ function instantiateList() {
   // console.log(taskList);
   for (var i =0; i < taskList.length; i++) {
     var taskItem = {
-      id: Date.now() + i,
+      id: Date.now() + 2 + i,
       item: taskList[i],
       checked: false
     };
@@ -167,31 +172,45 @@ function hideMessage() {
 }
 
 function generateList(card) {
-  console.log(card);
+  // console.log(card);
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
-    console.log(card.tasks[i]);
-    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked" data-id=${card.tasks[i].id}><span class="card__span">${card.tasks[i].item}</span></li>`;
-    // console.log(cardList)
-
+    // console.log(card.tasks[i]);
+    cardList += `<li class="list-item" data-id=${card.tasks[i].id}><img src="graphics/checkbox.svg" class="card__li--unchecked" ><span class="card__span">${card.tasks[i].item}</span></li>`;
   }
   return cardList;
 }
 
-function checkOffItem(e) {
-  e.target.src = `graphics/checkbox-active.svg`;
-  e.target.nextSibling.classList.add('card__span--italic');
+function findCardIndex(e) {
+  var cardId = e.target.closest('article').getAttribute('data-id');
+  var cardIndex = lists.findIndex(function(index) {
+      return index.id === parseInt(cardId);
+    });
+  return cardIndex;
 }
 
-// var span = document.querySelector('.card__span');
-//     span.textContent.add('.card__span--italic');
+function findTask(e) {
+  var itemDataAtt = e.target.closest('li').getAttribute('data-id');
+  var targetCard = lists[findCardIndex(e)];
+  var targetTask = targetCard.tasks.find(function(task) {
+    return task.id === parseInt(itemDataAtt);
+  });
+  return targetTask;
+}
 
-// function instantiateList() {
-//   var taskObjects = []; 
-//   for (var i =0; i < taskList.length; i++) {
-//     var taskItem = new TaskItem(taskList[i]);
-//     taskObjects.push(taskItem);
-//   }
-//   instantiateCard(taskObjects);
-//   console.log(taskObjects[0].checked);
-// }
+function checkOffItem(e) {
+  var targetTask = findTask(e);
+  var cardIndex = findCardIndex(e);
+  lists[cardIndex].updateTask(targetTask, lists);
+  lists[cardIndex].saveToStorage(lists);
+  console.log(lists)
+  console.log(lists[cardIndex]);
+  if(targetTask.checked === true) {
+    e.target.src = `graphics/checkbox-active.svg`;
+    e.target.nextSibling.classList.add('card__span--italic');
+} else {
+    e.target.src = `graphics/checkbox.svg`;
+    e.target.nextSibling.classList.remove('card__span--italic');
+  }
+}
+

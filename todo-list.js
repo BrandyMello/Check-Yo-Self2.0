@@ -19,18 +19,9 @@ class ToDoList {
 
   }
 
-  updateTask() {
-
+  updateTask(task, cards) {
+    task.checked = !task.checked;
+    console.log(task.checked);
+    this.saveToStorage(cards);
   }
 }
-
-// class TaskItem {
-//   constructor(items) {
-//     this.items = items;
-//     this.checked = false;
-//   }
-
-//   updateCheck() {
-
-//   }
-// }
