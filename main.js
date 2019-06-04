@@ -6,7 +6,6 @@ var makeListBtn = document.querySelector('.form__btn--make-list');
 var clearListBtn = document.querySelector('.form__btn--clear-list');
 var display = document.querySelector('.rt__section--display');
 var message = document.querySelector('.rt__section--message');
-// var taskBubble = document.querySelector('.card__li--unchecked');
 var lists = [];
 var taskList = [];
 
@@ -18,7 +17,7 @@ makeListBtn.addEventListener('click', handleMakeListBtn);
 display.addEventListener('click', findCardIndex);
 display.addEventListener('click', findTask);
 display.addEventListener('click', checkOffItem);
-// display.addEventListener('click', deleteCard);
+display.addEventListener('click', deleteCard);
 
 addItem.disabled = true;
 makeListBtn.disabled = true;
@@ -26,7 +25,6 @@ clearListBtn.disabled = true;
 
 window.onload = function() {
   reloadLists();
-  // console.log(lists);
 }
 
 function reloadLists() {
@@ -41,7 +39,7 @@ function reloadLists() {
 
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
-  console.log(newToDo.tasks);
+  // console.log(newToDo.tasks);
   populateCard(newToDo);
   lists.push(newToDo);
   newToDo.saveToStorage(lists);
@@ -138,6 +136,7 @@ function instantiateCard(objectsArray) {
   lists.push(newToDo);
   populateCard(newToDo);
   newToDo.saveToStorage(lists);
+  disableCardDeleteBtn(newToDo);
 }
 
 function populateCard(cardObj) {
@@ -152,16 +151,17 @@ function populateCard(cardObj) {
           </output>
           <footer>
             <div class="rt__div--urgent">
-              <img src="graphics/urgent.svg" class="rt__img--urgent">
+              <input type="image" src="graphics/urgent.svg" class="rt__img--urgent">
               <p>URGENT</p>
             </div>
             <div class="rt__div--delete">
-              <img src="graphics/delete.svg" class="rt__img--delete">
+              <input type="image" src="graphics/delete.svg" class="rt__img--delete">
             <p>DELETE</p>  
             </div> 
           </footer>       
         </article>`;
   display.insertAdjacentHTML('afterbegin', taskCard);
+  disableCardDeleteBtn(cardObj);
 }
 
 function hideMessage() {
@@ -205,9 +205,9 @@ function checkOffItem(e) {
   var targetTask = findTask(e);
   var cardIndex = findCardIndex(e);
   lists[cardIndex].updateTask(targetTask, lists);
+  checkIfCompleted(e)
   // lists[cardIndex].saveToStorage(lists);
   // console.log(lists)
-  // console.log(lists[cardIndex]);
   if(targetTask.checked === true) {
     e.target.src = `graphics/checkbox-active.svg`;
     e.target.nextSibling.classList.add('card__span--italic');
@@ -217,11 +217,41 @@ function checkOffItem(e) {
   }
 }
 
-// function deleteCard(e) {
-//   checkIfCompleted(e);
+function deleteCard(e) {
+  checkIfCompleted(e);
+}
+
+// function enableDeleteCard() {
+
 // }
 
-// function checkIfCompleted(e) {
-//   console.log(e.target);
-// }
+function checkIfCompleted(e) {
+
+  var card = findCardIndex(e);
+  var itemsList = lists[card].tasks;
+  console.log(lists[card].tasks)
+  var cardDeleteBtn = document.querySelector('.rt__img--delete');
+  for (var i = 0; i < itemsList.length; i++) {
+    // console.log(itemsList[i].checked)
+    if (itemsList[i].checked === false) {
+      console.log(cardDeleteBtn)
+      // cardDeleteBtn.setAttribute('disabled');
+      return
+    } else {
+      // cardDeleteBtn.removeAttribute('disabled');
+      console.log(cardDeleteBtn)
+      
+    }
+  }
+  
+}
+
+function disableCardDeleteBtn(card) {
+  var deleteBtn = document.querySelector('.rt__img--delete');
+  deleteBtn.disabled = true;
+  // console.log(deleteBtn);
+  // card.deleteBtn.disabled = true;
+}
+// console.log(lists[card].tasks);
+  // lists.deleteFromStorage();
 

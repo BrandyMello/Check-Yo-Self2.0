@@ -12,7 +12,7 @@ class ToDoList {
   }
 
   deleteFormStorage() {
-
+    // console.log('in class');
   }
 
   updateToDo() {
@@ -21,7 +21,7 @@ class ToDoList {
 
   updateTask(task, cards) {
     task.checked = !task.checked;
-    console.log(task.checked);
+    // console.log(task.checked);
     this.saveToStorage(cards);
   }
 }
