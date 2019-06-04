@@ -142,7 +142,7 @@ function instantiateCard(objectsArray) {
 function populateCard(cardObj) {
   hideMessage();
   // console.log(cardObj);
-  var taskCard = `<article class="rt__aricle--card" data-id=${cardObj.id}>
+  var taskCard = `<article class="rt__article--card" data-id=${cardObj.id}>
           <h2>${cardObj.title}</h2>
           <output class="rt__output--list">
             <ul class="rt__ul--list">
