@@ -6,7 +6,7 @@ var makeListBtn = document.querySelector('.form__btn--make-list');
 var clearListBtn = document.querySelector('.form__btn--clear-list');
 var display = document.querySelector('.rt__section--display');
 var message = document.querySelector('.rt__section--message');
-var taskBubble = document.querySelector('.card__li--unchecked');
+// var taskBubble = document.querySelector('.card__li--unchecked');
 var lists = [];
 var taskList = [];
 
@@ -18,6 +18,7 @@ makeListBtn.addEventListener('click', handleMakeListBtn);
 display.addEventListener('click', findCardIndex);
 display.addEventListener('click', findTask);
 display.addEventListener('click', checkOffItem);
+// display.addEventListener('click', deleteCard);
 
 addItem.disabled = true;
 makeListBtn.disabled = true;
@@ -176,7 +177,9 @@ function generateList(card) {
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
     // console.log(card.tasks[i]);
-    cardList += `<li class="list-item" data-id=${card.tasks[i].id}><img src="graphics/checkbox.svg" class="card__li--unchecked" ><span class="card__span">${card.tasks[i].item}</span></li>`;
+    var checkStatus = card.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg';
+    var spanClass = card.tasks[i].checked ? `card__span--italic` : `card__span`
+    cardList += `<li class="list-item" data-id=${card.tasks[i].id}><img src="graphics/${checkStatus}" class="card__li--unchecked" ><span class="${spanClass}">${card.tasks[i].item}</span></li>`;
   }
   return cardList;
 }
@@ -202,9 +205,9 @@ function checkOffItem(e) {
   var targetTask = findTask(e);
   var cardIndex = findCardIndex(e);
   lists[cardIndex].updateTask(targetTask, lists);
-  lists[cardIndex].saveToStorage(lists);
-  console.log(lists)
-  console.log(lists[cardIndex]);
+  // lists[cardIndex].saveToStorage(lists);
+  // console.log(lists)
+  // console.log(lists[cardIndex]);
   if(targetTask.checked === true) {
     e.target.src = `graphics/checkbox-active.svg`;
     e.target.nextSibling.classList.add('card__span--italic');
@@ -213,4 +216,12 @@ function checkOffItem(e) {
     e.target.nextSibling.classList.remove('card__span--italic');
   }
 }
+
+// function deleteCard(e) {
+//   checkIfCompleted(e);
+// }
+
+// function checkIfCompleted(e) {
+//   console.log(e.target);
+// }
 
