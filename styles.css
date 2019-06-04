@@ -196,6 +196,7 @@ h2 {
   width: 20px;
   height: 20px;
   color: #3C6577;
+  outline: none;
 }
 
 .card__span {
@@ -303,6 +304,7 @@ footer {
   .header__img--search {
     height: 40px;
     width: 40px;
+    margin-left: 3%;
   }
 
   .header__input--search {
