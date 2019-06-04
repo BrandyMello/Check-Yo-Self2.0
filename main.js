@@ -14,10 +14,7 @@ tempList.addEventListener('click', deleteTempItem);
 task.addEventListener('keyup', enableBtns);
 title.addEventListener('keyup', enableBtns);
 makeListBtn.addEventListener('click', handleMakeListBtn);
-display.addEventListener('click', findCardIndex);
-display.addEventListener('click', findTask);
-display.addEventListener('click', checkOffItem);
-display.addEventListener('click', deleteCard);
+display.addEventListener('click', handleDisplayEvents);
 
 addItem.disabled = true;
 makeListBtn.disabled = true;
@@ -27,6 +24,43 @@ window.onload = function() {
   reloadLists();
 }
 
+function handleDisplayEvents(e) { 
+  if (e.target.className === 'card__li--unchecked') {
+    findCardIndex(e);
+    findTask(e);
+    checkOffItem(e);
+  }
+  if (e.target.className === 'rt__img--delete') {
+    findId(e);
+    deleteCard(e);
+  } 
+}
+
+function findId(e) {
+  var cardId = e.target.closest('.rt__article--card').getAttribute('data-id');
+  return lists.find(function(item) {
+  return item.id === parseInt(cardId);
+  });
+}
+
+function deleteCard(e) {
+  var card = findId(e);
+  var cardId = card.id;
+  var cardIndex = findCardIndex(e);
+  var targetedCard = e.target.closest('article');
+  var itemsList = lists[cardIndex].tasks;
+  for (var i = 0; i < itemsList.length; i++) {
+    if (itemsList[i].checked === false) {
+      console.log('disable')
+      return
+    } else {
+      targetedCard.remove();
+      lists[cardIndex].deleteFromStorage(cardId);
+      // console.log(card);
+    }
+  } 
+}
+
 function reloadLists() {
   var newLists = JSON.parse(localStorage.getItem('todos')) || [];
   newLists.map(function(object) {
@@ -34,8 +68,6 @@ function reloadLists() {
  });
   hideMessage();
 }
-
-//do I need to retrurn above and if so why?
 
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
@@ -79,7 +111,7 @@ function addTaskItem(e) {
   e.preventDefault();
   var list = document.querySelector('.lft__ul--list');
   var taskListItem = `
-  <li class="list-item"><img src="graphics/delete-list-item.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
+  <li class="list-item"><input type="image" src="graphics/delete-list-item.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
     list.insertAdjacentHTML('beforeend', taskListItem);
     taskList.push(task.value);
     task.value = '';
@@ -103,10 +135,6 @@ function handleMakeListBtn(e) {
   instantiateList();
   clearForm();  
 }
-
-//Cannot get message to disappear.
-//two global arrays
-//do I need to return instantiateList?
 
 function clearForm() {
   var list = document.querySelector('.lft__ul--list');
@@ -136,7 +164,7 @@ function instantiateCard(objectsArray) {
   lists.push(newToDo);
   populateCard(newToDo);
   newToDo.saveToStorage(lists);
-  disableCardDeleteBtn(newToDo);
+  // disableCardDeleteBtn(newToDo);
 }
 
 function populateCard(cardObj) {
@@ -161,7 +189,7 @@ function populateCard(cardObj) {
           </footer>       
         </article>`;
   display.insertAdjacentHTML('afterbegin', taskCard);
-  disableCardDeleteBtn(cardObj);
+  // disableCardDeleteBtn(cardObj);
 }
 
 function hideMessage() {
@@ -179,7 +207,7 @@ function generateList(card) {
     // console.log(card.tasks[i]);
     var checkStatus = card.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg';
     var spanClass = card.tasks[i].checked ? `card__span--italic` : `card__span`
-    cardList += `<li class="list-item" data-id=${card.tasks[i].id}><img src="graphics/${checkStatus}" class="card__li--unchecked" ><span class="${spanClass}">${card.tasks[i].item}</span></li>`;
+    cardList += `<li class="list-item" data-id=${card.tasks[i].id}><input type="image" src="graphics/${checkStatus}" class="card__li--unchecked" ><span class="${spanClass}">${card.tasks[i].item}</span></li>`;
   }
   return cardList;
 }
@@ -205,7 +233,7 @@ function checkOffItem(e) {
   var targetTask = findTask(e);
   var cardIndex = findCardIndex(e);
   lists[cardIndex].updateTask(targetTask, lists);
-  checkIfCompleted(e)
+  // checkIfCompleted(e)
   // lists[cardIndex].saveToStorage(lists);
   // console.log(lists)
   if(targetTask.checked === true) {
@@ -217,41 +245,4 @@ function checkOffItem(e) {
   }
 }
 
-function deleteCard(e) {
-  checkIfCompleted(e);
-}
-
-// function enableDeleteCard() {
-
-// }
-
-function checkIfCompleted(e) {
-
-  var card = findCardIndex(e);
-  var itemsList = lists[card].tasks;
-  console.log(lists[card].tasks)
-  var cardDeleteBtn = document.querySelector('.rt__img--delete');
-  for (var i = 0; i < itemsList.length; i++) {
-    // console.log(itemsList[i].checked)
-    if (itemsList[i].checked === false) {
-      console.log(cardDeleteBtn)
-      // cardDeleteBtn.setAttribute('disabled');
-      return
-    } else {
-      // cardDeleteBtn.removeAttribute('disabled');
-      console.log(cardDeleteBtn)
-      
-    }
-  }
-  
-}
-
-function disableCardDeleteBtn(card) {
-  var deleteBtn = document.querySelector('.rt__img--delete');
-  deleteBtn.disabled = true;
-  // console.log(deleteBtn);
-  // card.deleteBtn.disabled = true;
-}
-// console.log(lists[card].tasks);
-  // lists.deleteFromStorage();
 

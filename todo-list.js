@@ -11,8 +11,15 @@ class ToDoList {
     localStorage.setItem('todos', JSON.stringify(cardsArray));
   }
 
-  deleteFormStorage() {
-    // console.log('in class');
+  deleteFromStorage(id) {
+    var newLists = lists.filter(function(object) {
+      return object.id !== parseInt(id);
+    });
+    lists = newLists;
+
+    console.log(id);
+    this.saveToStorage(lists);
+    console.log('in class');
   }
 
   updateToDo() {
@@ -21,7 +28,6 @@ class ToDoList {
 
   updateTask(task, cards) {
     task.checked = !task.checked;
-    // console.log(task.checked);
     this.saveToStorage(cards);
   }
 }
