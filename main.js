@@ -14,6 +14,10 @@ tempList.addEventListener('click', deleteTempItem);
 task.addEventListener('keyup', enableBtns);
 title.addEventListener('keyup', enableBtns);
 makeListBtn.addEventListener('click', handleMakeListBtn);
+display.addEventListener('click', findCardIndex);
+display.addEventListener('click', findTask);
+display.addEventListener('click', checkOffItem);
+display.addEventListener('click', deleteCard);
 
 addItem.disabled = true;
 makeListBtn.disabled = true;
@@ -31,20 +35,23 @@ function reloadLists() {
   hideMessage();
 }
 
+//do I need to retrurn above and if so why?
+
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
+  // console.log(newToDo.tasks);
   populateCard(newToDo);
   lists.push(newToDo);
   newToDo.saveToStorage(lists);
 }
 
-function enableBtns() {
-  enablePlus();
-  enableMakeListBtn();
-  enableClearBtn();
+function enableBtns(e) {
+  enablePlus(e);
+  enableMakeListBtn(e);
+  enableClearBtn(e);
 }
 
-function enablePlus() {
+function enablePlus(e) {
   if (task.value !== '' ) {
     addItem.disabled = false;
   } else {
@@ -52,15 +59,15 @@ function enablePlus() {
   }
 }
 
-function enableMakeListBtn() {
-  if (task.value !== '' || title.value !== '') {
-    makeListBtn.disabled = false;
-  } else {
+function enableMakeListBtn(e) {
+  if (task.value === '' || title.value === '') {
     makeListBtn.disabled = true;
+  } else {
+    makeListBtn.disabled = false;
   }
 }
 
-function enableClearBtn() {
+function enableClearBtn(e) {
   if (task.value !== '' && title.value !== '') {
     clearListBtn.disabled = false;
   } else {
@@ -72,10 +79,11 @@ function addTaskItem(e) {
   e.preventDefault();
   var list = document.querySelector('.lft__ul--list');
   var taskListItem = `
-  <li class="list-item"><img src="graphics/delete.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
+  <li class="list-item"><img src="graphics/delete-list-item.svg" class="form__li--delete"><span class="li__span">${task.value}</span></li>`;
     list.insertAdjacentHTML('beforeend', taskListItem);
     taskList.push(task.value);
     task.value = '';
+    enablePlus(e);
 }
 
 function deleteTempItem(e) {
@@ -91,12 +99,14 @@ function removeTempItem(item) {
 
 function handleMakeListBtn(e) {
   e.preventDefault();
+  enableBtns(e)
   instantiateList();
   clearForm();  
 }
 
 //Cannot get message to disappear.
 //two global arrays
+//do I need to return instantiateList?
 
 function clearForm() {
   var list = document.querySelector('.lft__ul--list');
@@ -108,11 +118,17 @@ function clearForm() {
 
 function instantiateList() {
   var taskObjects = []; 
+  // console.log(taskList);
   for (var i =0; i < taskList.length; i++) {
-    var taskItem = new TaskItem(taskList[i]);
+    var taskItem = {
+      id: Date.now() + 2 + i,
+      item: taskList[i],
+      checked: false
+    };
     taskObjects.push(taskItem);
   }
   instantiateCard(taskObjects);
+  // console.log(taskObjects);
 }
 
 function instantiateCard(objectsArray) {
@@ -120,10 +136,12 @@ function instantiateCard(objectsArray) {
   lists.push(newToDo);
   populateCard(newToDo);
   newToDo.saveToStorage(lists);
+  disableCardDeleteBtn(newToDo);
 }
 
 function populateCard(cardObj) {
   hideMessage();
+  // console.log(cardObj);
   var taskCard = `<article class="rt__aricle--card" data-id=${cardObj.id}>
           <h2>${cardObj.title}</h2>
           <output class="rt__output--list">
@@ -133,16 +151,17 @@ function populateCard(cardObj) {
           </output>
           <footer>
             <div class="rt__div--urgent">
-              <img src="graphics/urgent.svg" class="rt__img--urgent">
+              <input type="image" src="graphics/urgent.svg" class="rt__img--urgent">
               <p>URGENT</p>
             </div>
             <div class="rt__div--delete">
-              <img src="graphics/delete.svg" class="rt__img--delete">
+              <input type="image" src="graphics/delete.svg" class="rt__img--delete">
             <p>DELETE</p>  
             </div> 
           </footer>       
         </article>`;
   display.insertAdjacentHTML('afterbegin', taskCard);
+  disableCardDeleteBtn(cardObj);
 }
 
 function hideMessage() {
@@ -154,10 +173,85 @@ function hideMessage() {
 }
 
 function generateList(card) {
+  // console.log(card);
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
-    cardList += `<li class="list-item"><img src="graphics/checkbox.svg" class="card__li--unchecked"><span class="card__span">${card.tasks[i].items}</span></li>`;
+    // console.log(card.tasks[i]);
+    var checkStatus = card.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg';
+    var spanClass = card.tasks[i].checked ? `card__span--italic` : `card__span`
+    cardList += `<li class="list-item" data-id=${card.tasks[i].id}><img src="graphics/${checkStatus}" class="card__li--unchecked" ><span class="${spanClass}">${card.tasks[i].item}</span></li>`;
   }
   return cardList;
 }
+
+function findCardIndex(e) {
+  var cardId = e.target.closest('article').getAttribute('data-id');
+  var cardIndex = lists.findIndex(function(index) {
+      return index.id === parseInt(cardId);
+    });
+  return cardIndex;
+}
+
+function findTask(e) {
+  var itemDataAtt = e.target.closest('li').getAttribute('data-id');
+  var targetCard = lists[findCardIndex(e)];
+  var targetTask = targetCard.tasks.find(function(task) {
+    return task.id === parseInt(itemDataAtt);
+  });
+  return targetTask;
+}
+
+function checkOffItem(e) {
+  var targetTask = findTask(e);
+  var cardIndex = findCardIndex(e);
+  lists[cardIndex].updateTask(targetTask, lists);
+  checkIfCompleted(e)
+  // lists[cardIndex].saveToStorage(lists);
+  // console.log(lists)
+  if(targetTask.checked === true) {
+    e.target.src = `graphics/checkbox-active.svg`;
+    e.target.nextSibling.classList.add('card__span--italic');
+} else {
+    e.target.src = `graphics/checkbox.svg`;
+    e.target.nextSibling.classList.remove('card__span--italic');
+  }
+}
+
+function deleteCard(e) {
+  checkIfCompleted(e);
+}
+
+// function enableDeleteCard() {
+
+// }
+
+function checkIfCompleted(e) {
+
+  var card = findCardIndex(e);
+  var itemsList = lists[card].tasks;
+  console.log(lists[card].tasks)
+  var cardDeleteBtn = document.querySelector('.rt__img--delete');
+  for (var i = 0; i < itemsList.length; i++) {
+    // console.log(itemsList[i].checked)
+    if (itemsList[i].checked === false) {
+      console.log(cardDeleteBtn)
+      // cardDeleteBtn.setAttribute('disabled');
+      return
+    } else {
+      // cardDeleteBtn.removeAttribute('disabled');
+      console.log(cardDeleteBtn)
+      
+    }
+  }
+  
+}
+
+function disableCardDeleteBtn(card) {
+  var deleteBtn = document.querySelector('.rt__img--delete');
+  deleteBtn.disabled = true;
+  // console.log(deleteBtn);
+  // card.deleteBtn.disabled = true;
+}
+// console.log(lists[card].tasks);
+  // lists.deleteFromStorage();
 

@@ -44,6 +44,8 @@ h1 {
   border-radius: 0 3px 3px 0;
   margin-right: 15px;
   width: 375px;
+  padding-left: 10px;
+  font-size: 1.5em;
 }
 
 main {
@@ -74,11 +76,12 @@ li {
 .li__span {
   align-self: baseline;
   margin-left: 10px;
+  font-size: 1.4em;
 }
 
 .form__li--delete {
-  height: 20px;
-  width: 20px;
+  height: 30px;
+  width: 30px;
   color: #1F1F3D;
 }
 
@@ -92,6 +95,8 @@ li {
   height: 60px;
   margin: 10px 0;
   width: 100%;
+  padding-left: 10px;
+  font-size: 1.5em;
 }
 
 .form__input--title {
@@ -190,12 +195,17 @@ h2 {
 .card__li--unchecked {
   width: 20px;
   height: 20px;
-  color: #1F1F3D;
+  color: #3C6577;
 }
 
 .card__span {
   padding-left: 5px;
   color: #1F1F3D;
+}
+
+.card__span--italic {
+  font-style: italic;
+  color: #3C6577;
 }
 
 footer {

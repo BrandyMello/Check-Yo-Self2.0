@@ -6,32 +6,22 @@ class ToDoList {
     this.tasks = list.tasks; //array of objects
   }
 
-  // saveToStorage() {
-
-  // }
+ 
   saveToStorage(cardsArray) {
     localStorage.setItem('todos', JSON.stringify(cardsArray));
   }
 
   deleteFormStorage() {
-
+    // console.log('in class');
   }
 
   updateToDo() {
 
   }
 
-  updateTask() {
-
-  }
-
-  // get id() {
-  //   return this.id;
-  // }
-}
-
-class TaskItem {
-  constructor(items) {
-    this.items = items;
+  updateTask(task, cards) {
+    task.checked = !task.checked;
+    // console.log(task.checked);
+    this.saveToStorage(cards);
   }
 }
