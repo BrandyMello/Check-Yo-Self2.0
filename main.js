@@ -14,17 +14,7 @@ tempList.addEventListener('click', deleteTempItem);
 task.addEventListener('keyup', enableBtns);
 title.addEventListener('keyup', enableBtns);
 makeListBtn.addEventListener('click', handleMakeListBtn);
-// display.addEventListener('click', findCardIndex);
-// display.addEventListener('click', findTask);
-// display.addEventListener('click', checkOffItem);
 display.addEventListener('click', handleDisplayEvents);
-// display.addEventListener('click', checkIfCompleted);
-
-function handleDisplayEvents(e) {
-  findCardIndex(e);
-  findTask(e);
-  checkOffItem(e);
-}
 
 addItem.disabled = true;
 makeListBtn.disabled = true;
@@ -34,6 +24,43 @@ window.onload = function() {
   reloadLists();
 }
 
+function handleDisplayEvents(e) { 
+  if (e.target.className === 'card__li--unchecked') {
+    findCardIndex(e);
+    findTask(e);
+    checkOffItem(e);
+  }
+  if (e.target.className === 'rt__img--delete') {
+    findId(e);
+    deleteCard(e);
+  } 
+}
+
+function findId(e) {
+  var cardId = e.target.closest('.rt__article--card').getAttribute('data-id');
+  return lists.find(function(item) {
+  return item.id === parseInt(cardId);
+  });
+}
+
+function deleteCard(e) {
+  var card = findId(e);
+  var cardId = card.id;
+  var cardIndex = findCardIndex(e);
+  var targetedCard = e.target.closest('article');
+  var itemsList = lists[cardIndex].tasks;
+  for (var i = 0; i < itemsList.length; i++) {
+    if (itemsList[i].checked === false) {
+      console.log('disable')
+      return
+    } else {
+      targetedCard.remove();
+      lists[cardIndex].deleteFromStorage(cardId);
+      // console.log(card);
+    }
+  } 
+}
+
 function reloadLists() {
   var newLists = JSON.parse(localStorage.getItem('todos')) || [];
   newLists.map(function(object) {
@@ -41,8 +68,6 @@ function reloadLists() {
  });
   hideMessage();
 }
-
-//do I need to retrurn above and if so why?
 
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
@@ -110,10 +135,6 @@ function handleMakeListBtn(e) {
   instantiateList();
   clearForm();  
 }
-
-//Cannot get message to disappear.
-//two global arrays
-//do I need to return instantiateList?
 
 function clearForm() {
   var list = document.querySelector('.lft__ul--list');
@@ -224,39 +245,4 @@ function checkOffItem(e) {
   }
 }
 
-
-
-// function enableDeleteCard() {
-
-// }
-
-// function checkIfCompleted(e) {
-
-//   var card = findCardIndex(e);
-//   var itemsList = lists[card].tasks;
-//   console.log(lists[card].tasks);
-//   var cardDeleteBtn = document.querySelector('.rt__img--delete');
-//   for (var i = 0; i < itemsList.length; i++) {
-//     // console.log(itemsList[i].checked)
-//     if (itemsList[i].checked === false) {
-//       console.log(cardDeleteBtn)
-//       // cardDeleteBtn.setAttribute('disabled');
-//       return
-//     } else {
-//       // cardDeleteBtn.removeAttribute('disabled');
-//       console.log(cardDeleteBtn)
-      
-//     }
-//   }
-  
-// }
-
-// function disableCardDeleteBtn(card) {
-//   var deleteBtn = document.querySelector('.rt__img--delete');
-//   deleteBtn.disabled = true;
-//   // console.log(deleteBtn);
-//   // card.deleteBtn.disabled = true;
-// }
-// console.log(lists[card].tasks);
-  // lists.deleteFromStorage();
 
