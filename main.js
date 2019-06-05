@@ -24,8 +24,7 @@ window.onload = function() {
   reloadLists();
 }
 
-function handleDisplayEvents(e) { 
-  console.log(e.target)
+function handleDisplayEvents(e) {
   if (e.target.className === 'card__li--unchecked') {
     findCardIndex(e);
     findTask(e);
@@ -91,7 +90,6 @@ function deleteCard(e) {
   var itemsList = lists[cardIndex].tasks;
   for (var i = 0; i < itemsList.length; i++) {
     if (itemsList[i].checked === false) {
-      console.log('disable')
       return
     } else {
       targetedCard.remove();
@@ -110,7 +108,6 @@ function reloadLists() {
 
 function reInstantiateCard(list) {
   var newToDo = new ToDoList({id:list.id, title:list.title, urgent:list.urgent, tasks:list.tasks});
-  // console.log(newToDo.tasks);
   populateCard(newToDo);
   lists.push(newToDo);
   newToDo.saveToStorage(lists);
@@ -184,8 +181,7 @@ function clearForm() {
 }
 
 function instantiateList() {
-  var taskObjects = []; 
-  // console.log(taskList);
+  var taskObjects = [];
   for (var i =0; i < taskList.length; i++) {
     var taskItem = {
       id: Date.now() + 2 + i,
@@ -195,7 +191,6 @@ function instantiateList() {
     taskObjects.push(taskItem);
   }
   instantiateCard(taskObjects);
-  // console.log(taskObjects);
 }
 
 function instantiateCard(objectsArray) {
@@ -203,7 +198,6 @@ function instantiateCard(objectsArray) {
   lists.push(newToDo);
   populateCard(newToDo);
   newToDo.saveToStorage(lists);
-  // disableCardDeleteBtn(newToDo);
 }
 
 function populateCard(cardObj) {
@@ -214,7 +208,6 @@ function populateCard(cardObj) {
   var h2Style = cardObj.urgent ? 'change-card-h2' : '';
   var pStyle = cardObj.urgent ? 'style-urgent-p' : '';
   var cardUrgentStyle = cardObj.urgent ? 'rt__article--card change-card': 'rt__article--card';
-
   var taskCard = `<article class="${cardUrgentStyle}" data-id=${cardObj.id}>
           <h2 class="${h2Style}">${cardObj.title}</h2>
           <output class="rt__output--list">
@@ -234,7 +227,6 @@ function populateCard(cardObj) {
           </footer>       
         </article>`;
   display.insertAdjacentHTML('afterbegin', taskCard);
-  // disableCardDeleteBtn(cardObj);
 }
 
 function hideMessage() {
@@ -246,10 +238,8 @@ function hideMessage() {
 }
 
 function generateList(card) {
-  // console.log(card);
   var cardList = '';
   for (var i = 0; i < card.tasks.length; i++) {
-    // console.log(card.tasks[i]);
     var checkStatus = card.tasks[i].checked ? 'checkbox-active.svg' : 'checkbox.svg';
     var spanClass = card.tasks[i].checked ? `card__span--italic` : `card__span`
     cardList += `<li class="list-item" data-id=${card.tasks[i].id}><input type="image" src="graphics/${checkStatus}" class="card__li--unchecked" ><span class="${spanClass}">${card.tasks[i].item}</span></li>`;
@@ -278,9 +268,6 @@ function checkOffItem(e) {
   var targetTask = findTask(e);
   var cardIndex = findCardIndex(e);
   lists[cardIndex].updateTask(targetTask, lists);
-  // checkIfCompleted(e)
-  // lists[cardIndex].saveToStorage(lists);
-  // console.log(lists)
   if(targetTask.checked === true) {
     e.target.src = `graphics/checkbox-active.svg`;
     e.target.nextSibling.classList.add('card__span--italic');
