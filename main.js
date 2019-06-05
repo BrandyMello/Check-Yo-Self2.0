@@ -25,26 +25,66 @@ window.onload = function() {
 }
 
 function handleDisplayEvents(e) { 
+  console.log(e.target)
   if (e.target.className === 'card__li--unchecked') {
     findCardIndex(e);
     findTask(e);
     checkOffItem(e);
   }
   if (e.target.className === 'rt__img--delete') {
-    findId(e);
+    findCard(e);
     deleteCard(e);
-  } 
+  }
+  if (e.target.className === 'rt__img--urgent') {
+    makeUrgent(e);
+  }
 }
 
-function findId(e) {
+function findCard(e) {
   var cardId = e.target.closest('.rt__article--card').getAttribute('data-id');
   return lists.find(function(item) {
   return item.id === parseInt(cardId);
   });
 }
 
+function makeUrgent(e) {
+  var card = findCard(e);
+  var cardStyle = e.target.closest('article');
+  card.updateToDo();
+  var urgentImg = 'graphics/urgent-active.svg';
+  var notUrgentImg = 'graphics/urgent.svg';
+  if (card.urgent === true) {
+    e.target.src = urgentImg;
+    styleUrgentCard(e, card);
+  } 
+  if (card.urgent === false) {
+    e.target.src = notUrgentImg;
+    styleUrgentCard(e, card);
+  }
+}
+
+function styleUrgentCard(e, card) {
+  var cardStyle = e.target.closest('article');
+  var h2Style = cardStyle.querySelector('h2');
+  var footerStyle = e.target.closest('footer');
+  var pStyle = footerStyle.querySelector('p');
+  if (card.urgent === true) {
+    cardStyle.classList.add('change-card');
+    h2Style.classList.add('change-card-h2');
+    footerStyle.classList.add('change-card-footer');
+    pStyle.classList.add('style-urgent-p');
+
+  } 
+  if (card.urgent === false) {
+    cardStyle.classList.remove('change-card');
+    h2Style.classList.remove('change-card-h2');
+    footerStyle.classList.remove('change-card-footer');
+    pStyle.classList.remove('style-urgent-p');
+  }
+}
+
 function deleteCard(e) {
-  var card = findId(e);
+  var card = findCard(e);
   var cardId = card.id;
   var cardIndex = findCardIndex(e);
   var targetedCard = e.target.closest('article');
@@ -56,7 +96,6 @@ function deleteCard(e) {
     } else {
       targetedCard.remove();
       lists[cardIndex].deleteFromStorage(cardId);
-      // console.log(card);
     }
   } 
 }
@@ -70,7 +109,7 @@ function reloadLists() {
 }
 
 function reInstantiateCard(list) {
-  var newToDo = new ToDoList({id:list.id, title:list.title, urgent:false, tasks:list.tasks});
+  var newToDo = new ToDoList({id:list.id, title:list.title, urgent:list.urgent, tasks:list.tasks});
   // console.log(newToDo.tasks);
   populateCard(newToDo);
   lists.push(newToDo);
@@ -169,18 +208,24 @@ function instantiateCard(objectsArray) {
 
 function populateCard(cardObj) {
   hideMessage();
-  // console.log(cardObj);
-  var taskCard = `<article class="rt__article--card" data-id=${cardObj.id}>
-          <h2>${cardObj.title}</h2>
+  var urgentIcon = cardObj.urgent ? 'graphics/urgent-active.svg' : 'graphics/urgent.svg';
+  var footerClass = cardObj.urgent ? 'change-card-footer' : '';
+  var h2Style = cardObj.urgent ? 'change-card-h2' : '';
+  var h2Style = cardObj.urgent ? 'change-card-h2' : '';
+  var pStyle = cardObj.urgent ? 'style-urgent-p' : '';
+  var cardUrgentStyle = cardObj.urgent ? 'rt__article--card change-card': 'rt__article--card';
+
+  var taskCard = `<article class="${cardUrgentStyle}" data-id=${cardObj.id}>
+          <h2 class="${h2Style}">${cardObj.title}</h2>
           <output class="rt__output--list">
             <ul class="rt__ul--list">
             ${generateList(cardObj)}
             </ul>
           </output>
-          <footer>
+          <footer class="${footerClass}">
             <div class="rt__div--urgent">
-              <input type="image" src="graphics/urgent.svg" class="rt__img--urgent">
-              <p>URGENT</p>
+              <input type="image" src="${urgentIcon}" class="rt__img--urgent">
+              <p class="${pStyle}">URGENT</p>
             </div>
             <div class="rt__div--delete">
               <input type="image" src="graphics/delete.svg" class="rt__img--delete">

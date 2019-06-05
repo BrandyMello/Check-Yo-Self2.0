@@ -154,6 +154,10 @@ li {
   width: 95%;
 }
 
+.lft__btn--filter:hover {
+  background-color: #EF4A23;
+}
+
 .rt__section--display {
   background-color: #F3F6F7;
   columns: 2 250px;
@@ -222,6 +226,24 @@ footer {
   height: 30px;
   width: 30px;
   text-align: center;
+  outline: none;
+}
+
+.change-card {
+  background-color: #FFE89D;
+  border: 2px solid #FFC30C;
+}
+
+.change-card-h2 {
+  border-bottom: 2px solid #FFC30C;
+}
+
+.change-card-footer {
+  border-top: 2px solid #FFC30C;
+}
+
+.style-urgent-p {
+  color: #B23A25;
 }
 
 .rt__img--delete {
